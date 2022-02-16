@@ -1,0 +1,10 @@
+blockchain:
+  address: http://127.0.0.1:8545
+  ws: ws://127.0.0.1:8545
+  pk: 1f0b42cd759961accc3ed0990fe8eabed1f3edde0cdbf727ffb156d6e87f6a5e
+  timeout: 1s
+contract:
+  address: 0xaD86Df8c289739A6fCb95005A3F5df0ea56F88c6
+  gas_limit: 3000000
+  gas_price: 1000000
+  default_wei_founds: 0
