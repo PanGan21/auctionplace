@@ -5,9 +5,12 @@ import (
 	"crypto/ecdsa"
 	"errors"
 	"math/big"
+	"regexp"
 
 	"github.com/PanGan21/auctionplace/config"
+	contracts "github.com/PanGan21/auctionplace/contracts/interfaces"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
@@ -42,9 +45,37 @@ func getSigner(ctx context.Context, client *ethclient.Client) (*bind.TransactOpt
 	}
 
 	signer.Nonce = big.NewInt(int64(nonce))
-	signer.Value = big.NewInt(config.App.ContractConfig.WeiFounds)
-	signer.GasLimit = uint64(config.App.ContractConfig.GasLimit)
-	signer.GasPrice = big.NewInt(config.App.ContractConfig.GasPrice)
+	signer.Value = big.NewInt(config.App.Contract.WeiFounds)
+	signer.GasLimit = uint64(config.App.Contract.GasLimit)
+	signer.GasPrice = big.NewInt(config.App.Contract.GasPrice)
 
 	return signer, nil
+}
+
+func GetContract(ctx context.Context, client *ethclient.Client, address string) (*contracts.AuctionPlace, error) {
+	if err := validateAddress(address); err != nil {
+		return nil, err
+	}
+	contract, err := contracts.NewAuctionPlace(common.HexToAddress(address), client)
+	if err != nil {
+		return nil, err
+	}
+	return contract, nil
+}
+
+func GetAddressFromString(address string) (common.Address, error) {
+	addr := common.HexToAddress(address)
+	if err := validateAddress(address); err != nil {
+		return addr, err
+	}
+
+	return addr, nil
+}
+
+func validateAddress(address string) error {
+	regex := regexp.MustCompile("^0x[0-9a-fA-F]{40}$")
+	if ok := regex.MatchString(address); !ok {
+		return ErrInvalidAddress
+	}
+	return nil
 }

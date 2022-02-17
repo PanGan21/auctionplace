@@ -27,8 +27,8 @@ var (
 )
 
 type AppConfig struct {
-	Blockchain     BlockchainConfig
-	ContractConfig ContractConfig
+	Blockchain BlockchainConfig
+	Contract   ContractConfig
 }
 
 type BlockchainConfig struct {

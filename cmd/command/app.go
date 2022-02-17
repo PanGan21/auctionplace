@@ -28,6 +28,7 @@ func NewRootCommand(ctx context.Context) *cobra.Command {
 
 	rootCommand.PersistentFlags().StringP("blockchain.pk", "k", "", "Account private key")
 	rootCommand.AddCommand(NewDeployCommand(ctx))
+	rootCommand.AddCommand(NewRunnerCommand(ctx))
 
 	return rootCommand
 }
