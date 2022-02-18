@@ -42,7 +42,7 @@ func NewOfferCommand(ctx context.Context) *cobra.Command {
 		},
 	}
 
-	offerCommand.Flags().StringVar(&action, "action", "", "Action to perform: all")
+	offerCommand.Flags().StringVar(&action, "action", "", "Action to perform: all, user, create")
 	offerCommand.Flags().StringVar(&account, "account", "", "Account that owns the offers to be fetched")
 	offerCommand.Flags().Int64Var(&auctionId, "auctionId", 0, "The auction id for which you want to create an offer")
 	offerCommand.Flags().Int64Var(&amount, "amount", 0, "The amount for the offer to be created")

@@ -14,7 +14,7 @@ func NewRootCommand(ctx context.Context) *cobra.Command {
 		Short:             "Run the auction place service",
 		PersistentPreRunE: config.Setup,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return errors.New("please specify a command: [deploy]")
+			return errors.New("please specify a command: [deploy, run, trade]")
 		},
 	}
 

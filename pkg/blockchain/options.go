@@ -27,3 +27,13 @@ func NewCreateOfferOpts(auctionId int64, amount int64) *CreateOfferOpts {
 		amount:    big.NewInt(amount),
 	}
 }
+
+type TradeOpts struct {
+	auctionId *big.Int
+}
+
+func NewTradeOpts(auctionId int64) *TradeOpts {
+	return &TradeOpts{
+		auctionId: big.NewInt(auctionId),
+	}
+}

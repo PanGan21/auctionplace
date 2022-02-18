@@ -19,6 +19,7 @@ func NewRunnerCommand(ctx context.Context) *cobra.Command {
 
 	runCommand.AddCommand(api.NewAuctionCommand(ctx))
 	runCommand.AddCommand(api.NewOfferCommand(ctx))
+	runCommand.AddCommand(api.NewTradeCommand(ctx))
 
 	return runCommand
 }
