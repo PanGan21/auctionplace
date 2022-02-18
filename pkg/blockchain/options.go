@@ -15,3 +15,15 @@ func NewCreateAuctionOpts(name string, description string, min int64) *CreateAuc
 		min:         big.NewInt(min),
 	}
 }
+
+type CreateOfferOpts struct {
+	auctionId *big.Int
+	amount    *big.Int
+}
+
+func NewCreateOfferOpts(auctionId int64, amount int64) *CreateOfferOpts {
+	return &CreateOfferOpts{
+		auctionId: big.NewInt(auctionId),
+		amount:    big.NewInt(amount),
+	}
+}

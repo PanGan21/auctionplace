@@ -12,5 +12,7 @@ deploy:
 
 # go run cmd/main.go run auction --action user --account 0xFCAd0B19bB29D4674531d6f115237E16AfCE377c
 # go run cmd/main.go run auction --action create --name pg1 --description des1 --min 2
+# go run cmd/main.go run offer --action create --auctionId 1 --amount 5
+# go run cmd/main.go run offer --action user --account 0xFCAd0B19bB29D4674531d6f115237E16AfCE377c
 
 .PHONY: compile-contract, generate-contract-interface, deploy

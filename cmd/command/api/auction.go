@@ -15,7 +15,7 @@ const GetAllAction = "all"
 const GetUserAction = "user"
 const CreateAuctionAction = "create"
 
-var allowedActions = map[string]struct{}{
+var allowedAuctionActions = map[string]struct{}{
 	GetAllAction:        {},
 	GetUserAction:       {},
 	CreateAuctionAction: {},
@@ -56,7 +56,7 @@ func NewAuctionCommand(ctx context.Context) *cobra.Command {
 }
 
 func runAuction(ctx context.Context, action string, account string, name string, description string, min int64) error {
-	if _, ok := allowedActions[action]; !ok {
+	if _, ok := allowedAuctionActions[action]; !ok {
 		return ErrInvalidAuctionAction
 	}
 
