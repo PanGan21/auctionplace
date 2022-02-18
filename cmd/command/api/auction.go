@@ -13,10 +13,12 @@ import (
 
 const GetAllAction = "all"
 const GetUserAction = "user"
+const CreateAuctionAction = "create"
 
 var allowedActions = map[string]struct{}{
-	GetAllAction:  {},
-	GetUserAction: {},
+	GetAllAction:        {},
+	GetUserAction:       {},
+	CreateAuctionAction: {},
 }
 
 var (
@@ -27,14 +29,17 @@ var (
 // NewAuctionCommand created a new auction command
 func NewAuctionCommand(ctx context.Context) *cobra.Command {
 	var (
-		action  string
-		account string
+		action      string
+		account     string
+		name        string
+		description string
+		min         int64
 	)
 	auctionCommand := &cobra.Command{
 		Use:   "auction",
 		Short: "Get a list of all the auctions or a user's auctions",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := runAuction(ctx, action, account)
+			err := runAuction(ctx, action, account, name, description, min)
 			if err != nil {
 				fmt.Println(err.Error())
 			}
@@ -43,11 +48,14 @@ func NewAuctionCommand(ctx context.Context) *cobra.Command {
 
 	auctionCommand.Flags().StringVar(&action, "action", "", "Action to perform: all")
 	auctionCommand.Flags().StringVar(&account, "account", "", "Account that owns the auctions to be fetched")
+	auctionCommand.Flags().StringVar(&name, "name", "", "The name of the auction")
+	auctionCommand.Flags().StringVar(&description, "description", "", "The description of the auction")
+	auctionCommand.Flags().Int64Var(&min, "min", 0, "The minimum amount of the auction")
 	auctionCommand.MarkFlagRequired("action")
 	return auctionCommand
 }
 
-func runAuction(ctx context.Context, action string, account string) error {
+func runAuction(ctx context.Context, action string, account string, name string, description string, min int64) error {
 	if _, ok := allowedActions[action]; !ok {
 		return ErrInvalidAuctionAction
 	}
@@ -71,15 +79,20 @@ func runAuction(ctx context.Context, action string, account string) error {
 
 		fmt.Println("Auctions: ", auctions)
 	case GetUserAction:
-		if len(account) == 0 {
-			return ErrInvalidUserAddress
-		}
 		auctions, err := runner.GetUserAuctions(ctx, client, account)
 		if err != nil {
 			return err
 		}
 
 		fmt.Println("Auctions: ", auctions)
+	case CreateAuctionAction:
+		createAuctionOpts := blockchain.NewCreateAuctionOpts(name, description, min)
+		err = runner.CreateAuction(ctx, client, createAuctionOpts)
+		if err != nil {
+			return err
+		}
+
+		fmt.Println("Successfully created auction with name: ", name, " description: ", description, " min: ", min)
 	}
 
 	return nil

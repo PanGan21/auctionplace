@@ -109,8 +109,9 @@ contract AuctionPlace {
     {
         uint256[] storage userAuctionIds = usersToAuctionIds[_user];
         Auction[] memory _auctions = new Auction[](userAuctionIds.length);
-        for (uint256 i = 1; i < userAuctionIds.length; i++) {
-            _auctions[i - 1] = idsToAuctions[i];
+
+        for (uint256 i = 0; i < userAuctionIds.length; i++) {
+            _auctions[i] = idsToAuctions[i + 1];
         }
         return _auctions;
     }
@@ -122,8 +123,8 @@ contract AuctionPlace {
     {
         uint256[] storage userOfferIds = usersToOfferIds[_user];
         Offer[] memory _offers = new Offer[](userOfferIds.length);
-        for (uint256 i = 1; i < userOfferIds.length; i++) {
-            _offers[i - 1] = idsToOffers[i];
+        for (uint256 i = 0; i < userOfferIds.length; i++) {
+            _offers[i] = idsToOffers[i + 1];
         }
         return _offers;
     }

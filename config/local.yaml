@@ -1,10 +1,10 @@
 blockchain:
   address: http://127.0.0.1:8545
   ws: ws://127.0.0.1:8545
-  pk: 9890941501eba804754077cab54e7825a3619ef18c2f5af144878d576ec64d2a
+  pk: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
   timeout: 1s
 contract:
-  address: 0x95Be8BcD2094CaD3cc9a6778330668057066B0D2
+  address: 0x8bFc6fD9437CF1879fB84aADe867b6E81EfB5631
   gas_limit: 3000000
   gas_price: 1000000
   default_wei_founds: 0

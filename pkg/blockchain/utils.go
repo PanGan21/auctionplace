@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/ecdsa"
 	"errors"
+	"fmt"
 	"math/big"
 	"regexp"
 
@@ -65,6 +66,7 @@ func GetContract(ctx context.Context, client *ethclient.Client, address string) 
 
 func GetAddressFromString(address string) (common.Address, error) {
 	addr := common.HexToAddress(address)
+	fmt.Println(addr)
 	if err := validateAddress(address); err != nil {
 		return addr, err
 	}
